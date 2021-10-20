@@ -24,8 +24,8 @@ char *addfour(char **s)
 
 void	ft_prmap(t_map *map)
 {
-	map->rx = -1;
-	map->ry = -1;
+	map->rx = 1920;
+	map->ry = 800;
 	map->fr = -1;
 	map->fg = -1;
 	map->fb = -1;
@@ -36,7 +36,19 @@ void	ft_prmap(t_map *map)
 	map->so = NULL;
 	map->ea = NULL;
 	map->we = NULL;
-	map->s = NULL;
+}
+
+void ft_cord(int fd, t_map *map)
+{
+	char *s;
+	int size;
+
+	size = 0;
+	while (get_next_line(fd, &s) > 0)
+	{
+		map->rmap[size] = ft_strdup(s);
+		size++;
+	}
 }
 
 void ft_printmap(t_map *map)
@@ -47,7 +59,6 @@ void ft_printmap(t_map *map)
 	printf("SO : %s\n", map->so);
 	printf("WE : %s\n", map->we);
 	printf("EA : %s\n", map->ea);
-	printf("S : %s \n", map->s);
 	printf("FR : %d \n", map->fr);
 	printf("FG : %d \n", map->fg);
 	printf("FB : %d \n", map->fb);

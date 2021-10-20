@@ -15,13 +15,13 @@ void ft_validmapend(char **array)
 		{
 			c = array[i][j];
 			if (array[i][j] == '0' && (array[i][j + 1] == ' ' || array[i][j - 1] == ' '))
-				ft_error();
+				ft_error(0);
 			if (array[i][j] == '0' && (array[i - 1][j] == ' ' || array[i - 1][j + 1] == ' '))
-				ft_error();
+				ft_error(0);
 			if (array[i][j] == '0' && (array[i - 1][j - 1] == ' ' || array[i + 1][j + 1] == ' '))
-				ft_error();
+				ft_error(0);
 			if (array[i][j] == '0' && (array[i + 1][j] == ' ' || array[i + 1][j - 1] == ' '))
-				ft_error();
+				ft_error(0);
 			j++;
 		}
 		j = 0;
@@ -80,7 +80,8 @@ int	ft_isdigit(int c)
 	return (0);
 }
 
-void ft_error()
+void ft_error(int i)
 {
-	printf("Erro !");
+	if (i == 0)
+		printf("Erro !\n Invalid Map !\n");
 }

@@ -1,99 +1,75 @@
 
 #include "ft_map.h"
 
-void ft_name(char **str, char *s)
+void	ft_textsv(char *str, t_map *map, int infoc)
+{
+	if (infoc == 0)
+		map->no = ft_strdup(str);
+	else if(infoc == 1)
+		map->so = ft_strdup(str);
+	else if(infoc == 2)
+		map->we = ft_strdup(str);
+	else if(infoc == 3)
+		map->ea = ft_strdup(str);
+	free(str);
+}
+
+void	ft_name(t_map *map, char *s)
 {
 	char *c;
 	int i;
+	int infoc;
 
 	c = (char*)malloc(sizeof(char*) * 1);
 	c[0] = 0;
-	i = 1;
-	if (s[i] == 'O' || s[i] == 'E' || s[i] == 'A')
-		i++;
+	i = 0;
 	while (s[i] == ' ')
 		i++;
-	while (s[i] != 0)
+	if (s[i] == 'N' && s[i + 1] == 'O')
+		infoc = 0;
+	else if (s[i] == 'S' && s[i + 1] == 'O')
+		infoc = 1;
+	else if (s[i] == 'W' && s[i + 1] == 'E')
+		infoc = 2;
+	else if (s[i] == 'E' && s[i + 1] == 'A')
+		infoc = 3;
+	else
 	{
+		free(c);
+		ft_error(0);
+	}
+	while (s[++i])
 		c = ft_charset(c, s[i]);
-		i++;
-	}
-	*str = ft_strdup(c);
+	ft_textsv(c, map, infoc);
 }
 
-void ft_r(int *x, int *y, char *s)
+void	ft_applyinfo(char *s, t_map *map)
 {
-	int i;
-	char *xs;
-	char *ys;
-
-	xs = (char*)malloc(sizeof(char*) * 1);
-	ys = (char*)malloc(sizeof(char*) * 1);
-	i = 1;
-	while (s[i] == ' ')
-		i++;
-	while (ft_isdigit(s[i]))
-	{
-		xs = ft_charset(xs, s[i]);
-		i++;
-	}
-	*x = ft_atoi(xs);
-	while (s[i] == ' ')
-		i++;
-	while (ft_isdigit(s[i]))
-	{
-		ys = ft_charset(ys, s[i]);
-		i++;
-	}
-	*y = ft_atoi(ys);
-	free(xs);
-	free(ys);
-}
-
-void ft_cord(int fd, t_map *map)
-{
-	char *s;
-	int size;
-
-	size = 0;
-	while (get_next_line(fd, &s) > 0)
-	{
-		map->rmap[size] = ft_strdup(s);
-		size++;
-	}
-}
-
-void ft_applyinfo(char *s, t_map *map)
-{
-	if (s[0] == 'R')
-		ft_r(&(map)->rx, &(map)->ry, s);
-	else if (s[0] == 'N')
-		ft_name(&(map)->no, s);
-	else if (s[0] == 'S')
-		ft_name(&(map)->so, s);
-	else if (s[0] == 'W')
-		ft_name(&(map)->we, s);
-	else if (s[0] == 'E')
-		ft_name(&(map)->ea, s);
-	else if (s[0] == 'F')
-		ft_fc(map, s);
-	else if (s[0] == 'C')
-		ft_fc(map, s);
+	if (ft_checkifhavefirst(s, 'N') && map->infop == 0)
+		ft_name(&map, s);
+	else if (ft_checkifhavefirst(s, 'S') && map->infop == 1)
+		ft_name(&map, s);
+	else if (ft_checkifhavefirst(s, 'W') && map->infop == 2)
+		ft_name(&map, s);
+	else if (ft_checkifhavefirst(s, 'E') && map->infop == 3)
+		ft_name(&map, s);
+	else if (ft_checkifhavefirst(s, 'F') && map->infop == 4)
+		ft_fc(&map, s);
+	else if (ft_checkifhavefirst(s, 'C') && map->infop == 5)
+		ft_fc(&map, s);
+	else if (!ft_chspaceorbrk(s))
+		ft_error(0);
 }
 
 void ft_extcub(int fd, t_map *map)
 {
 	char *s;
-	int b;
 
-	endf = 1;
-	b = 1;
 	ft_prmap(map);
-	while (b == 1)
+	while (map->infop != 6)
 	{
-		endf = get_next_line(fd, &s);
+		get_next_line(fd, &s);
 		ft_applyinfo(s, map);
-		b = ft_checkv(map);
 		//ft_printmap(map);
 	}
 	ft_mapvalid(map, fd);

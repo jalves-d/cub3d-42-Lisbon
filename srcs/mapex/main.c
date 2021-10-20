@@ -47,8 +47,8 @@ int	main(int argc, char **argv)
 	t_map	map;
 
 	cub3d(argc, argv, &map);
-	mlx_key_hook(map.mlx.win, key_hook, &map);
+/*	mlx_key_hook(map.mlx.win, key_hook, &map);
 	mlx_hook(map.mlx.win, 15, 1L << 16, windowsize, &map);
 	mlx_hook(map.mlx.win, 33, 1L << 5, exitgame, &map);
-	mlx_loop(map.mlx.mlx);
+	mlx_loop(map.mlx.mlx);*/
 }
