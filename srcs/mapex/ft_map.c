@@ -3,9 +3,9 @@
 
 void ft_alocstr(char *str, char *sttr, char *sstr)
 {
-	str = (char*)malloc(sizeof(char*));
-	sttr = (char*)malloc(sizeof(char*));
-	sstr = (char*)malloc(sizeof(char*));
+	str = (char*)malloc(sizeof(char));
+	sttr = (char*)malloc(sizeof(char));
+	sstr = (char*)malloc(sizeof(char));
 }
 
 char *addfour(char **s)
@@ -20,6 +20,7 @@ char *addfour(char **s)
 		st = ft_charset(st, ' ');
 		i++;
 	}
+	return st;
 }
 
 void	ft_prmap(t_map *map)
@@ -36,6 +37,7 @@ void	ft_prmap(t_map *map)
 	map->so = NULL;
 	map->ea = NULL;
 	map->we = NULL;
+	map->infop = 0;
 }
 
 void ft_cord(int fd, t_map *map)

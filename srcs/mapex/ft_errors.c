@@ -53,7 +53,7 @@ char *ft_charset(char *str, char s)
 	return (p);
 }
 
-char	*ft_strdup(char *src)
+/*char	*ft_strdup(char *src)
 {
 	char	*p;
 	int		i;
@@ -71,7 +71,7 @@ char	*ft_strdup(char *src)
 	}
 	p[i] = '\0';
 	return (p);
-}
+}*/
 
 int	ft_isdigit(int c)
 {
@@ -83,5 +83,6 @@ int	ft_isdigit(int c)
 void ft_error(int i)
 {
 	if (i == 0)
-		printf("Erro !\n Invalid Map !\n");
+		printf("Error !\n Invalid Map !\n");
+	exit (0);
 }

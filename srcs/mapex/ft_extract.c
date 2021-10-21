@@ -11,7 +11,7 @@ void	ft_textsv(char *str, t_map *map, int infoc)
 		map->we = ft_strdup(str);
 	else if(infoc == 3)
 		map->ea = ft_strdup(str);
-	free(str);
+	map->infop++;
 }
 
 void	ft_name(t_map *map, char *s)
@@ -33,44 +33,72 @@ void	ft_name(t_map *map, char *s)
 		infoc = 2;
 	else if (s[i] == 'E' && s[i + 1] == 'A')
 		infoc = 3;
-	else
-	{
-		free(c);
-		ft_error(0);
-	}
-	while (s[++i])
-		c = ft_charset(c, s[i]);
+	i += 2;
+	while (s[i] == ' ')
+		i++;
+	while (s[i])
+		c = ft_charset(c, s[i++]);
 	ft_textsv(c, map, infoc);
 }
 
 void	ft_applyinfo(char *s, t_map *map)
 {
-	if (ft_checkifhavefirst(s, 'N') && map->infop == 0)
-		ft_name(&map, s);
-	else if (ft_checkifhavefirst(s, 'S') && map->infop == 1)
-		ft_name(&map, s);
-	else if (ft_checkifhavefirst(s, 'W') && map->infop == 2)
-		ft_name(&map, s);
-	else if (ft_checkifhavefirst(s, 'E') && map->infop == 3)
-		ft_name(&map, s);
-	else if (ft_checkifhavefirst(s, 'F') && map->infop == 4)
-		ft_fc(&map, s);
-	else if (ft_checkifhavefirst(s, 'C') && map->infop == 5)
-		ft_fc(&map, s);
-	else if (!ft_chspaceorbrk(s))
+	if (!ft_checkifhavefirst(s, 'N') && map->infop == 0)
+		ft_name(map, s);
+	else if (!ft_checkifhavefirst(s, 'S') && map->infop == 1)
+		ft_name(map, s);
+	else if (!ft_checkifhavefirst(s, 'W') && map->infop == 2)
+		ft_name(map, s);
+	else if (!ft_checkifhavefirst(s, 'E') && map->infop == 3)
+		ft_name(map, s);
+	else if (!ft_checkifhavefirst(s, 'F') && map->infop == 4)
+		ft_fc(map, s, 'F');
+	else if (!ft_checkifhavefirst(s, 'C') && map->infop == 5)
+		ft_fc(map, s, 'C');
+	else if (ft_strlen(s) != 0)
 		ft_error(0);
+}
+
+int	ft_checkmapline(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '1' && str[i] != ' ' && str[i] != '\n')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 void ft_extcub(int fd, t_map *map)
 {
 	char *s;
+	int i;
 
 	ft_prmap(map);
 	while (map->infop != 6)
 	{
 		get_next_line(fd, &s);
+		//printf("%s", s);
 		ft_applyinfo(s, map);
 		//ft_printmap(map);
 	}
-	ft_mapvalid(map, fd);
+	/*i = 0;
+	while (i == 0)
+	{
+		get_next_line(fd, &s);
+		if (!ft_checkifhavefirst(s, '\n'))
+		{
+			if (ft_checkmapline(s))
+			{
+				i = 1;
+			}
+			else
+				ft_error(0);
+		}
+	}*/
+	//ft_mapvalid(map, fd);
 }

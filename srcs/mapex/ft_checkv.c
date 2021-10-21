@@ -44,7 +44,7 @@ void ft_mapvalid(t_map *map, int fd)
 			else if (lines[i] == '2' || lines[i] == 'N')
 				temporary = ft_charset(temporary, lines[i]);
 			else
-				ft_error();
+				ft_error(0);
 			i++;
 		}
 		if (lines[0] != '\0')
@@ -53,17 +53,6 @@ void ft_mapvalid(t_map *map, int fd)
 	}
 	map->rmap = ft_split(temporary, '?');
 	//ft_validmapend(map->rmap);
-}
-
-int ft_checkv(t_map *map)
-{
-	if (map->rx == -1 || map->ry == -1 || map->no == NULL)
-		return (1);
-	if (map->so == NULL || map->ea == NULL || map->we == NULL)
-		return (1);
-	if (map->fr == -1 || map->s == NULL || map->cr == -1)
-		return (1);
-	return (0);
 }
 
 void ft_pass(t_map *map, char *r, char *g, char *b, char c)
@@ -84,34 +73,46 @@ void ft_pass(t_map *map, char *r, char *g, char *b, char c)
 	free(g);
 	free(b);
 	if (c == 'F' && (map->fr == -1 || map->fg == -1 || map->fb == -1))
-		ft_error();
+		ft_error(0);
 	if (c == 'C' && (map->cr == -1 || map->cg == -1 || map->cb == -1))
-		ft_error();
+		ft_error(0);
 }
 
-void ft_fc(t_map *map, char *s)
+void ft_fc(t_map *map, char *s, char c)
 {
-	char *r;
-	char *g;
-	char *b;
+	char **r;
 	int i;
+	int j;
 
-	i = 1;
-	r = malloc(sizeof(char*));
-	g = malloc(sizeof(char*));
-	b = malloc(sizeof(char*));
-	ft_setnull(r, g, b);
+	i = 0;
+	j = 0;
+	printf("cheguei aqui !");
+	r = (char **)malloc(sizeof(char*) * 4);
+	r[4] = NULL;
+	ft_setnull(&r[0], &r[1], &r[2]); // need pass double pointer here
 	while (s[i] == ' ')
 		i++;
-	while (ft_isdigit(s[i]))
-		r = ft_charset(r, s[i++]);
-	if (s[i] == ',')
-		i++;
-	while (ft_isdigit(s[i]))
-		g = ft_charset(g, s[i++]);
-	if (s[i] == ',')
-		i++;
-	while (ft_isdigit(s[i]))
-		b = ft_charset(b, s[i++]);
-	ft_pass(map, r, g, b, s[0]);
+	i++;
+	while (j < 3)
+	{
+		while (s[i] == ' ')
+			i++;
+		if (!ft_isdigit(s[i]))
+			ft_error(0);
+		while (ft_isdigit(s[i]))
+			r[j] = ft_charset(r[j], s[i++]);
+		if (s[i] == ',' && j != 2)
+			i++;
+		else if (j != 2)
+			ft_error(0);
+		else if (j == 2)
+		{
+			while (s[i] == ' ')
+				i++;
+			if (s[i] != '\n')
+				ft_error(0);
+		}
+		j++;
+	}
+	ft_pass(map, r[0], r[1], r[2], c);
 }

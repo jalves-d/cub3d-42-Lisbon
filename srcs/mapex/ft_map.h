@@ -41,11 +41,12 @@ void	ft_realocmt(char ***array, char *str);
 int		ft_atoi(const char *str);
 char	*addfour(char **s);
 void	ft_prmap(t_map *map);
-void	ft_fc(t_map *map, char *s);
+void	ft_fc(t_map *map, char *s, char c);
 void	ft_alocstr(char *str, char *sttr, char *sstr);
 void	ft_printmap(t_map *map);
 void	ft_setnull(char *r, char *g, char *b);
 char	**ft_split(char const *s, char c);
 int		ft_chspaceorbrk(char *str);
+int		ft_checkifhavefirst(char *str, char c);
 
 #endif

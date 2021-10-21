@@ -20,6 +20,9 @@ int	ft_atoi(const char *str)
 
 void ft_setnull(char *r, char *g, char *b)
 {
+	r = (char*)malloc(sizeof(char));
+	g = (char*)malloc(sizeof(char));
+	b = (char*)malloc(sizeof(char));
 	r[0] = 0;
 	g[0] = 0;
 	b[0] = 0;
@@ -52,7 +55,7 @@ char			*ft_strnncpy(char *dest, char const *src, unsigned int n)
 	while (src[i] != '\0' && i < n)
 	{
 		dest[i] = src[i];
-		++i;
+		i++;
 	}
 	dest[i] = '\0';
 	return (dest);

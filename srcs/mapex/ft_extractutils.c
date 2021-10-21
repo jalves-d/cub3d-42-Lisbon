@@ -21,6 +21,10 @@ int	ft_chspaceorbrk(char *str)
 	int i;
 
 	i = 0;
+	if (str[0] == '\0')
+		return (0);
+	if (ft_strlen(str))
+		return (0);
 	while (str[i])
 	{
 		if (str[i] != ' ' && str[i] != '\n')
