@@ -2,7 +2,7 @@ CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 NAME = cub
 
-SRC = cub3d.c memory.c commands.c
+SRC = cub3d.c memory.c commands.c mlx_utils.c view.c
 
 %.o: %.c
 	gcc -Imlx -c $< -o $@

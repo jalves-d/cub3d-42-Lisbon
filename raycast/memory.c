@@ -6,6 +6,7 @@ void	init_malloc(t_game	**game)
 	(*game)->win = malloc(sizeof(t_win));
 	(*game)->player = malloc(sizeof(t_player));
 	(*game)->map = malloc(sizeof(t_map));
+	(*game)->view = malloc(sizeof(t_map));
 }
 
 void	close_win(t_game *game)
@@ -16,9 +17,13 @@ void	close_win(t_game *game)
 
 int	finish_game(t_game	*game)
 {
+	free(game->view);
+	free(game->map);
 	free(game->player);
 	free(game->win);
 	free(game);
+	game->view = NULL;
+	game->map = NULL;
 	game->player = NULL;
 	game->win = NULL;
 	game = NULL;

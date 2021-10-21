@@ -3,9 +3,11 @@
 
 void	init_game(t_win *win)
 {
+	win->height = 480;
+	win->width = 640;
 	win->mlx = mlx_init();
-	win->mlx_win = mlx_new_window(win->mlx, 1920, 1080, "Cub3d");
-	win->img = mlx_new_image(win->mlx, 1920, 1080);
+	win->mlx_win = mlx_new_window(win->mlx, win->width, win->height, "Cub3d");
+	win->img = mlx_new_image(win->mlx, win->width, win->height);
 	win->addr = mlx_get_data_addr(win->img, &win->bits_per_pixel,
 			&win->line_length, &win->endian);
 }
@@ -23,6 +25,6 @@ int	main(int argc, char **argv)
 
 	init_malloc(&game);
 	init_game(game->win);
+	init_view(game->win, game->view);
 	game_status(game);
-	finish_game(game);
 }
