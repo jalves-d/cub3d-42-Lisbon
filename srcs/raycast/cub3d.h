@@ -22,11 +22,38 @@ typedef struct s_win
 
 typedef struct s_view
 {
-	double	view_height;
-	double	angle;
-	int		x;
-	int		y;
-	double	distance;
+	double	posX;
+	double	posY;
+	double	dirX;
+	double	dirY;
+	double	planeX;
+	double	planeY;
+	double	moveSpeed;
+	double	rotSpeed;
+
+	double	cameraX;
+	double	rayDirx;
+	double	rayDiry;
+
+	int	mapX;
+	int	mapY;
+
+	double	sideDistX;
+	double	sideDistY;
+	double	deltaDistX;
+	double	deltaDistY;
+	double	perpWallDist;
+
+	int	stepX;
+	int	stepY;
+
+	int	hit;
+	int	side;
+
+	int	lineHeight;
+	int	drawStart;
+	int	drawEnd;
+	int	color;
 }	t_view;
 
 
@@ -60,7 +87,7 @@ int	key_print(int key, t_game *game);
 //COMMANDS.C
 
 //VIEW.C
-void	init_view(t_win *win, t_view *view);
+void	init_view(t_win *win, t_view *view, t_map *map);
 //VIEW.C
 
 //MLX_UTILS.C
