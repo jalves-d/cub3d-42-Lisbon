@@ -78,27 +78,13 @@ void ft_extcub(int fd, t_map *map)
 	char *s;
 	int i;
 
+	i = 0;
 	ft_prmap(map);
 	while (map->infop != 6)
 	{
 		get_next_line(fd, &s);
-		//printf("%s", s);
 		ft_applyinfo(s, map);
 		//ft_printmap(map);
 	}
-	/*i = 0;
-	while (i == 0)
-	{
-		get_next_line(fd, &s);
-		if (!ft_checkifhavefirst(s, '\n'))
-		{
-			if (ft_checkmapline(s))
-			{
-				i = 1;
-			}
-			else
-				ft_error(0);
-		}
-	}*/
-	//ft_mapvalid(map, fd);
+	ft_mapvalid(map, fd);
 }

@@ -1,11 +1,50 @@
 
 #include "ft_map.h"
 
-void ft_validmapend(char **array)
+void	ft_setmapsizes(t_map *map)
 {
 	int i;
 	int j;
-	char c;
+
+	i = 0;
+	j = 0;
+	while (map->rmap[i])
+	{
+		if (ft_strlen(map->rmap[i]) > j)
+			j = ft_strlen(map->rmap[i]);
+		i++;
+	}
+	map->height = i;
+	map->widht = j;
+}
+
+void	ft_validaround(t_map *map, char **array, int i, int j)
+{
+	if (j + 1 < ft_strlen(array[i]))
+		if (array[i][j + 1] != '1' && array[i][j + 1] != '0')
+			if (!isfp(array[i][j + 1]))
+				ft_error(0);
+	if (j - 1 >= 0)
+		if (array[i][j - 1] != '1' && array[i][j - 1] != '0')
+			if (!isfp(array[i][j - 1]))
+				ft_error(0);
+	if (i + 1 < map->height)
+		if (array[i + 1][j] != '1' && array[i + 1][j] != '0')
+			if (!isfp(array[i + 1][j]))
+			{
+				printf("here : %c !\n", array[i + 1][j]);
+				ft_error(0);
+			}
+	if (i - 1 >= 0)
+		if (array[i - 1][j] != '1' && array[i - 1][j] != '0')
+			if (!isfp(array[i - 1][j]))
+				ft_error(0);
+}
+
+void ft_validmapend(t_map *map, char **array)
+{
+	int i;
+	int j;
 
 	i = 0;
 	j = 0;
@@ -13,17 +52,11 @@ void ft_validmapend(char **array)
 	{
 		while (array[i][j])
 		{
-			c = array[i][j];
-			if (array[i][j] == '0' && (array[i][j + 1] == ' ' || array[i][j - 1] == ' '))
-				ft_error(0);
-			if (array[i][j] == '0' && (array[i - 1][j] == ' ' || array[i - 1][j + 1] == ' '))
-				ft_error(0);
-			if (array[i][j] == '0' && (array[i - 1][j - 1] == ' ' || array[i + 1][j + 1] == ' '))
-				ft_error(0);
-			if (array[i][j] == '0' && (array[i + 1][j] == ' ' || array[i + 1][j - 1] == ' '))
-				ft_error(0);
+			if (array[i][j] == '0' || isfp(array[i][j]))
+				ft_validaround(map, array, i, j);
 			j++;
 		}
+		printf("line %d checked !\n", i);
 		j = 0;
 		i++;
 	}
@@ -52,26 +85,6 @@ char *ft_charset(char *str, char s)
 	free(str);
 	return (p);
 }
-
-/*char	*ft_strdup(char *src)
-{
-	char	*p;
-	int		i;
-
-	p = (char *)malloc(sizeof(char) * (ft_strlen(src) + 1));
-	i = 0;
-	if (p == NULL)
-	{
-		return (NULL);
-	}
-	while (src[i])
-	{
-		p[i] = src[i];
-		i++;
-	}
-	p[i] = '\0';
-	return (p);
-}*/
 
 int	ft_isdigit(int c)
 {

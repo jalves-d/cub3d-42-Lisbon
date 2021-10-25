@@ -1,3 +1,4 @@
+
 #include "ft_map.h"
 
 int	ft_checkifhavefirst(char *str, char c)

@@ -18,14 +18,14 @@ int	ft_atoi(const char *str)
 	return (num * negative);
 }
 
-void ft_setnull(char *r, char *g, char *b)
+void ft_setnull(char **r, char **g, char **b)
 {
-	r = (char*)malloc(sizeof(char));
-	g = (char*)malloc(sizeof(char));
-	b = (char*)malloc(sizeof(char));
-	r[0] = 0;
-	g[0] = 0;
-	b[0] = 0;
+	*r = (char*)malloc(sizeof(char));
+	*g = (char*)malloc(sizeof(char));
+	*b = (char*)malloc(sizeof(char));
+	(*r)[0] = 0;
+	(*g)[0] = 0;
+	(*b)[0] = 0;
 }
 
 unsigned int	spcount(char const *str, char charset)

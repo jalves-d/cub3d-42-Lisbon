@@ -23,7 +23,14 @@ void ft_realocmt(char ***array, char *str)
 	cparray[i] = ft_strdup(str);
 }
 
-void ft_mapvalid(t_map *map, int fd)
+int		isfp(char c)
+{
+	if (c == 'N' || c == 'W' || c == 'O' || c == 'S')
+		return (0);
+	return (1);
+}
+
+void	ft_mapvalid(t_map *map, int fd)
 {
 	char *lines;
 	int i;
@@ -39,9 +46,9 @@ void ft_mapvalid(t_map *map, int fd)
 		{
 			if (lines[i] == '\t')
 				temporary = addfour(&temporary);
-			else if (lines[i] == '1' || lines[i] == '0' || lines[i] == ' ')
+			else if (lines[i] == '1' || lines[i] == '0')
 				temporary = ft_charset(temporary, lines[i]);
-			else if (lines[i] == '2' || lines[i] == 'N')
+			else if (lines[i] == ' ' || !isfp(lines[i]))
 				temporary = ft_charset(temporary, lines[i]);
 			else
 				ft_error(0);
@@ -51,8 +58,11 @@ void ft_mapvalid(t_map *map, int fd)
 			temporary = ft_charset(temporary, '?');
 		i = 0;
 	}
+	i = -1;
 	map->rmap = ft_split(temporary, '?');
-	//ft_validmapend(map->rmap);
+	while (map->rmap[++i])
+		printf("Print map teste line [i] = %d : %s \n", (i > 9 ? 1 : i), map->rmap[i]);
+	ft_validmapend(map, map->rmap);
 }
 
 void ft_pass(t_map *map, char *r, char *g, char *b, char c)
@@ -73,9 +83,14 @@ void ft_pass(t_map *map, char *r, char *g, char *b, char c)
 	free(g);
 	free(b);
 	if (c == 'F' && (map->fr == -1 || map->fg == -1 || map->fb == -1))
+	{
 		ft_error(0);
+	}
 	if (c == 'C' && (map->cr == -1 || map->cg == -1 || map->cb == -1))
+	{
 		ft_error(0);
+	}
+	map->infop++;
 }
 
 void ft_fc(t_map *map, char *s, char c)
@@ -86,10 +101,9 @@ void ft_fc(t_map *map, char *s, char c)
 
 	i = 0;
 	j = 0;
-	printf("cheguei aqui !");
 	r = (char **)malloc(sizeof(char*) * 4);
 	r[4] = NULL;
-	ft_setnull(&r[0], &r[1], &r[2]); // need pass double pointer here
+	ft_setnull(&r[0], &r[1], &r[2]);
 	while (s[i] == ' ')
 		i++;
 	i++;
@@ -103,13 +117,11 @@ void ft_fc(t_map *map, char *s, char c)
 			r[j] = ft_charset(r[j], s[i++]);
 		if (s[i] == ',' && j != 2)
 			i++;
-		else if (j != 2)
-			ft_error(0);
 		else if (j == 2)
 		{
 			while (s[i] == ' ')
 				i++;
-			if (s[i] != '\n')
+			if (s[i] != '\0')
 				ft_error(0);
 		}
 		j++;
