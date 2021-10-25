@@ -38,6 +38,7 @@ void	ft_prmap(t_map *map)
 	map->ea = NULL;
 	map->we = NULL;
 	map->infop = 0;
+	map->nplayers = 0;
 }
 
 void ft_cord(int fd, t_map *map)

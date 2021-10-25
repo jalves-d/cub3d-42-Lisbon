@@ -60,8 +60,6 @@ void	ft_mapvalid(t_map *map, int fd)
 	}
 	i = -1;
 	map->rmap = ft_split(temporary, '?');
-	while (map->rmap[++i])
-		printf("Print map teste line [i] = %d : %s \n", (i > 9 ? 1 : i), map->rmap[i]);
 	ft_validmapend(map, map->rmap);
 }
 

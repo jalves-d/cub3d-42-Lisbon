@@ -9,6 +9,7 @@
 
 typedef struct s_map
 {
+	int nplayers;
 	int rx;
    	int ry;
 	char *no;
@@ -22,6 +23,7 @@ typedef struct s_map
 	int cg;
 	int cb;
 	char **rmap;
+	int	**mmap;
 	int infop;
 	int height;
 	int widht;
