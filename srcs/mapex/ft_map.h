@@ -23,12 +23,12 @@ typedef struct s_map
 	int cg;
 	int cb;
 	char **rmap;
-	int	**mmap;
 	int infop;
 	int height;
 	int widht;
 } t_map;
 
+void	cub3d(int argc, char **argv, t_map *map);
 int		isfp(char c);
 void	ft_name(t_map *map, char *s);
 void	ft_r(int *x, int *y, char *s);

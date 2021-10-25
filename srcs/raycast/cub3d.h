@@ -1,6 +1,7 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
+#include "../mapex/ft_map.h"
 #include <stdlib.h>
 #include <mlx.h>
 #include <stdio.h>
@@ -18,11 +19,6 @@ typedef struct s_win
 	int		height;
 	int		width;
 }	t_win;
-
-typedef struct s_map
-{
-
-}	t_map;
 
 typedef struct s_view
 {
