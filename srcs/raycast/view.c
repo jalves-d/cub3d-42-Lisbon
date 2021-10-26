@@ -12,8 +12,28 @@ void	print_line(t_win *win, t_view *view, int x, int y1, int y2, int color)
 	}
 }
 
-void	calc_view(t_view *view, t_win *win, t_map *map)
+void	print_sky(t_win *win, t_view *view, int x, int y, int color)
 {
+	while (y-- >= 0)
+		my_mlx_pixel_put(win, x, y, color);
+}
+
+void	print_floor(t_win *win, t_view *view, int x, int y, int color)
+{
+	while (y++ < win->height - 1)
+		my_mlx_pixel_put(win, x, y, color);
+}
+
+void	calc_view(t_game *game)
+{
+	t_win *win;
+	t_view *view;
+	t_map *map;
+
+	win = game->win;
+	view = game->view;
+	map = game->map;
+
 	int	x;
 	int	hit;
 	x = 0;
@@ -95,12 +115,25 @@ void	calc_view(t_view *view, t_win *win, t_map *map)
 		if (view->side == 1)
 			view->color = view->color / 2;
 		print_line(win, view, x, view->drawStart, view->drawEnd, view->color);
+		print_sky(win, view, x, view->drawStart, 0x3399FF);
+		print_floor(win, view, x, view->drawEnd, 0xFFFFFF);
 		x++;
 	}
 }
 
-void	init_view(t_win *win, t_view *view, t_map *map)
+int	main_loop(t_game *game)
 {
+	calc_view(game);
+}
+
+void	init_view(t_game *game ,t_map *map)
+{
+	t_win *win;
+	t_view *view;
+
+	win = game->win;
+	view = game->view;
+
 	view->posX = 12;
 	view->posY = 5;
 	view->dirX = -1;
@@ -110,5 +143,5 @@ void	init_view(t_win *win, t_view *view, t_map *map)
 	view->moveSpeed = 0.05;
 	view->rotSpeed = 0.05;
 
-	calc_view(view, win, map);
+	mlx_loop_hook(win->mlx, &main_loop, game);
 }

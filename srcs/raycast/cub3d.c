@@ -27,7 +27,8 @@ int	main(int argc, char **argv)
 		return (1);
 	cub3d(argc, argv, &map);
 	init_malloc(&game);
+	game->map = &map;
 	init_game(game->win);
-	init_view(game->win, game->view, &map);
+	init_view(game, &map);
 	game_status(game);
 }

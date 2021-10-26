@@ -88,7 +88,7 @@ int	key_print(int key, t_game *game);
 //COMMANDS.C
 
 //VIEW.C
-void	init_view(t_win *win, t_view *view, t_map *map);
+void	init_view(t_game *game, t_map *map);
 //VIEW.C
 
 //MLX_UTILS.C
