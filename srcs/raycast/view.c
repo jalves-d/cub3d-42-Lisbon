@@ -1,32 +1,5 @@
 #include "cub3d.h"
 
-int	worldMap[24][24] = {
-							{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-							{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-							{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-							{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-						};
-
 void	print_line(t_win *win, t_view *view, int x, int y1, int y2, int color)
 {
 	int	y;
@@ -89,32 +62,39 @@ void	calc_view(t_view *view, t_win *win, t_map *map)
 			}
 			else
 			{
+
 				view->sideDistY += view->deltaDistY;
 				view->mapY += view->stepY;
 				view->side = 1;
 			}
 
-			if (worldMap[view->mapX][view->mapY] > 0) hit = 1;
+			if (map->rmap[view->mapX][view->mapY] > 0) hit = 1;
 		}
 		if (view->side == 0)
 			view->perpWallDist = (view->mapX - view->posX + (1 - view->stepX) / 2) / view->rayDirx;
 		else
-			view->perpWallDist = (view->mapY - view->posY + (1 - view->stepY) / 2) / view->dirY;
+			view->perpWallDist = (view->mapY - view->posY + (1 - view->stepY) / 2) / view->rayDiry;
 
 		view->lineHeight = (int)(win->height / view->perpWallDist);
-
-		view->drawStart = -view->lineHeight / 2 + win->height / 2;
+		view->drawStart = (-view->lineHeight) / 2 + win->height / 2;
 		if (view->drawStart < 0)
 			view->drawStart = 0;
 		view->drawEnd = view->lineHeight / 2 + win->height / 2;
 		if (view->drawEnd >= win->height)
 			view->drawEnd = win->height - 1;
 
-		if (worldMap[view->mapY][view->mapX] == 1)
+		if (map->rmap[view->mapY][view->mapX] == 1)
 			view->color = 0xFF0000;
+		else if (map->rmap[view->mapY][view->mapX] == 2)
+			view->color = 0x00FF00;
+		else if (map->rmap[view->mapY][view->mapX] == 3)
+			view->color = 0x0000FF;
+		else if (map->rmap[view->mapY][view->mapX] == 4)
+			view->color = 0xFFFFFF;
+		else
+			view->color = 0xFFFF00;
 		if (view->side == 1)
 			view->color = view->color / 2;
-
 		print_line(win, view, x, view->drawStart, view->drawEnd, view->color);
 		x++;
 	}
@@ -122,8 +102,8 @@ void	calc_view(t_view *view, t_win *win, t_map *map)
 
 void	init_view(t_win *win, t_view *view, t_map *map)
 {
-	view->posX = 12;
-	view->posY = 5;
+	view->posX = 20;
+	view->posY = 16;
 	view->dirX = -1;
 	view->dirY = 0;
 	view->planeX = 0;
