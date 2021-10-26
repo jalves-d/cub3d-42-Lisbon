@@ -58,8 +58,8 @@ void ft_validmapend(t_map *map, char **array)
 		j = 0;
 		i++;
 	}
-	if (map->nplayers != 1)
-		ft_error(0);
+/*	if (map->nplayers != 1)
+		ft_error(0);*/
 }
 
 char *ft_charset(char *str, char s)

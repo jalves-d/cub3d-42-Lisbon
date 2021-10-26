@@ -28,6 +28,6 @@ int	main(int argc, char **argv)
 	cub3d(argc, argv, &map);
 	init_malloc(&game);
 	init_game(game->win);
-	init_view(game->win, game->view, game->map);
+	init_view(game->win, game->view, &map);
 	game_status(game);
 }

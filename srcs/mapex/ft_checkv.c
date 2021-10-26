@@ -25,7 +25,8 @@ void ft_realocmt(char ***array, char *str)
 
 int		isfp(char c)
 {
-	if (c == 'N' || c == 'W' || c == 'O' || c == 'S')
+	if (c == 'N' || c == 'W' || c == 'O' || c == 'S'
+		|| c == '2' || c == '3' || c == '4' || c == '5')
 		return (0);
 	return (1);
 }
