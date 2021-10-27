@@ -14,9 +14,7 @@ void	init_game(t_win *win)
 
 void	game_status(t_game *game)
 {
-	mlx_hook(game->win->mlx_win, 2, 1L << 0, key_print, game);
-	mlx_hook(game->win->mlx_win, 17, 0, close_win, game);
-	mlx_loop(game->win->mlx);
+
 }
 
 int	main(int argc, char **argv)

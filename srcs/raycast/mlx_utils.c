@@ -4,7 +4,8 @@ void	my_mlx_pixel_put(t_win *win, int x, int y, int color)
 {
 	char	*dst;
 
+	win->addr = mlx_get_data_addr(win->img, &win->bits_per_pixel, &win->line_length,
+								&win->endian);
 	dst = win->addr + (y * win->line_length + x * (win->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
-	mlx_put_image_to_window(win->mlx, win->mlx_win, win->img, 0, 0);
 }
