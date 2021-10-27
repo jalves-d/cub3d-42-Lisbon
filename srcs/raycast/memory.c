@@ -9,23 +9,24 @@ void	init_malloc(t_game	**game)
 	(*game)->view = malloc(sizeof(t_map));
 }
 
+int	finish_game(t_game	*game)
+{
+	free(game->map);
+	free(game->view);
+	free(game->player);
+	free(game->win);
+	free(game);
+	game->map = NULL;
+	game->view = NULL;
+	game->player = NULL;
+	game->win = NULL;
+	game = NULL;
+	return (1);
+}
+
 void	close_win(t_game *game)
 {
 	finish_game(game);
 	exit(0);
 }
 
-int	finish_game(t_game	*game)
-{
-	free(game->view);
-	free(game->map);
-	free(game->player);
-	free(game->win);
-	free(game);
-	game->view = NULL;
-	game->map = NULL;
-	game->player = NULL;
-	game->win = NULL;
-	game = NULL;
-	return (1);
-}
