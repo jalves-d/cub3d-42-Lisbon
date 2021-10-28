@@ -121,8 +121,8 @@ void	calc_view(t_game *game)
 		if (view->side == 1)
 			view->color = view->color / 2;
 		print_line(win, view, x, view->drawStart, view->drawEnd, view->color);
-		print_sky(win, view, x, view->drawStart, 0x3399FF);
-		print_floor(win, view, x, view->drawEnd, 0xFFFFFF);
+		print_sky(win, view, x, view->drawStart, create_rgb(map->cr, map->cg, map->cb));
+		print_floor(win, view, x, view->drawEnd, create_rgb(map->fr, map->fg, map->fb));
 		x++;
 	}
 }

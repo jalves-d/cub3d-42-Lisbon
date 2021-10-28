@@ -54,8 +54,22 @@ typedef struct s_view
 	int	drawStart;
 	int	drawEnd;
 	int	color;
+
+	int **buf;
+	int	**texture;
 }	t_view;
 
+typedef struct	s_img
+{
+	void	*img;
+	int		*data;
+
+	int		size_l;
+	int		bpp;
+	int		endian;
+	int		img_width;
+	int		img_height;
+}				t_img;
 
 typedef struct s_player
 {
@@ -68,6 +82,7 @@ typedef struct s_game
 	t_player	*player;
 	t_map		*map;
 	t_view		*view;
+	t_img		*img;
 }	t_game;
 
 
@@ -94,5 +109,11 @@ void	init_view(t_game *game);
 //MLX_UTILS.C
 void	my_mlx_pixel_put(t_win *win, int x, int y, int color);
 //MLX_UTILS.C
+void 	inittextures(t_game *game, t_map *map);
+void	load_texture(t_game *game, t_map *map);
+void	load_image(t_game *game, int *texture, char *path, t_img *img);
+void	draw(t_game *game);
+void	calc(t_view *info, t_map *map);
+int		create_rgb(int r, int g, int b);
 
 #endif
