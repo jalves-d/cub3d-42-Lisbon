@@ -135,7 +135,7 @@ int	main_loop(t_game *game)
 	return (0);
 }
 
-void	init_view(t_game *game ,t_map *map)
+void	init_view(t_game *game)
 {
 
 	game->view->posX = 2;
@@ -151,4 +151,5 @@ void	init_view(t_game *game ,t_map *map)
 	mlx_hook(game->win->mlx_win, 17, 0, close_win, game);
 	mlx_loop_hook(game->win->mlx, &main_loop, game);
 	mlx_loop(game->win->mlx);
+	printf("HELLO\n");
 }

@@ -20,12 +20,11 @@ void	game_status(t_game *game)
 int	main(int argc, char **argv)
 {
 	t_game	*game;
-	t_map	map;
 	if (argc != 2)
 		return (1);
-	cub3d(argc, argv, &map);
 	init_malloc(&game);
+	cub3d(argc, argv, game->map);
 	init_game(game->win);
-	init_view(game, &map);
+	init_view(game);
 	game_status(game);
 }
