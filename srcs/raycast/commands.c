@@ -9,17 +9,17 @@ int	key_print(int key, t_game *game)
 		close_win(game);
 	if (key == W)
 	{
-		if (!game->map->rmap[(int)(view->posX + view->dirX * view->moveSpeed)][(int)(view->posY)])
+		if (game->map->rmap[(int)(view->posX + view->dirX * view->moveSpeed)][(int)(view->posY)] == '0')
 			view->posX += view->dirX * view->moveSpeed;
-		if (!game->map->rmap[(int)(view->posX)][(int)(view->posY + view->dirY * view->moveSpeed)])
+		if (game->map->rmap[(int)(view->posX)][(int)(view->posY + view->dirY * view->moveSpeed)] == '0')
 			view->posY += view->dirY * view->moveSpeed;
 	}
 	//move backwards if no wall behind you
 	if (key == S)
 	{
-		if (!game->map->rmap[(int)(view->posX - view->dirX * view->moveSpeed)][(int)(view->posY)])
+		if (game->map->rmap[(int)(view->posX - view->dirX * view->moveSpeed)][(int)(view->posY)] == '0')
 			view->posX -= view->dirX * view->moveSpeed;
-		if (!game->map->rmap[(int)(view->posX)][(int)(view->posY - view->dirY * view->moveSpeed)])
+		if (game->map->rmap[(int)(view->posX)][(int)(view->posY - view->dirY * view->moveSpeed)] == '0')
 			view->posY -= view->dirY * view->moveSpeed;
 	}
 	//rotate to the right
