@@ -2,10 +2,10 @@
 
 void	calc_view(t_game *game)
 {
-	t_win *win;
-	t_view *view;
-	t_map *map;
-	int	x;
+	t_win	*win;
+	t_view	*view;
+	t_map	*map;
+	int		x;
 
 	win = game->win;
 	view = game->view;
@@ -27,7 +27,6 @@ int	main_loop(t_game *game)
 {
 	calc_view(game);
 	mlx_put_image_to_window(game->win->mlx, game->win->mlx_win, game->win->img, 0, 0);
-
 	return (0);
 }
 

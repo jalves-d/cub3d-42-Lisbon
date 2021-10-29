@@ -1,4 +1,3 @@
-
 #include "cub3d.h"
 
 void	init_game(t_win *win)
@@ -12,14 +11,10 @@ void	init_game(t_win *win)
 			&win->line_length, &win->endian);
 }
 
-void	game_status(t_game *game)
-{
-
-}
-
 int	main(int argc, char **argv)
 {
 	t_game	*game;
+
 	if (argc != 2)
 		return (1);
 	init_malloc(&game);

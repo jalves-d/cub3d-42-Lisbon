@@ -4,11 +4,8 @@ int	key_print(int key, t_game *game)
 {
 	t_view	*view;
 	t_map	*map;
-
-	double oldDirX;
-	double oldPlaneX;
-	double oldDirX;
-	double oldPlaneX;
+	double	old_dirx;
+	double	old_planey;
 
 	view = game->view;
 	map = game->map;
@@ -30,21 +27,21 @@ int	key_print(int key, t_game *game)
 	}
 	if (key == D)
 	{
-		view->dirX;
+		old_dirx = view->dirX;
 		view->dirX = view->dirX * cos(-view->rotSpeed) - view->dirY * sin(-view->rotSpeed);
-		view->dirY = oldDirX * sin(-view->rotSpeed) + view->dirY * cos(-view->rotSpeed);
-		view->planeX;
+		view->dirY = old_dirx * sin(-view->rotSpeed) + view->dirY * cos(-view->rotSpeed);
+		old_planey = view->planeX;
 		view->planeX = view->planeX * cos(-view->rotSpeed) - view->planeY * sin(-view->rotSpeed);
-		view->planeY = oldPlaneX * sin(-view->rotSpeed) + view->planeY * cos(-view->rotSpeed);
+		view->planeY = old_planey * sin(-view->rotSpeed) + view->planeY * cos(-view->rotSpeed);
 	}
 	if (key == A)
 	{
-		view->dirX;
+		old_dirx = view->dirX;
 		view->dirX = view->dirX * cos(view->rotSpeed) - view->dirY * sin(view->rotSpeed);
-		view->dirY = oldDirX * sin(view->rotSpeed) + view->dirY * cos(view->rotSpeed);
-		view->planeX;
+		view->dirY = old_dirx * sin(view->rotSpeed) + view->dirY * cos(view->rotSpeed);
+		old_planey = view->planeX;
 		view->planeX = view->planeX * cos(view->rotSpeed) - view->planeY * sin(view->rotSpeed);
-		view->planeY = oldPlaneX * sin(view->rotSpeed) + view->planeY * cos(view->rotSpeed);
+		view->planeY = old_planey * sin(view->rotSpeed) + view->planeY * cos(view->rotSpeed);
 	}
 	return (0);
 }
