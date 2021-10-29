@@ -18,7 +18,7 @@ clean:
 	/bin/rm -rf $(OBJS)
 	/bin/rm -rf $(OBJSB)
 
-fclean:
+fclean: clean
 	/bin/rm -f $(NAME)
 	/bin/rm -f $(BONUS)
 

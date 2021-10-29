@@ -20,13 +20,9 @@ void	init_buffer_texture(t_game *game)
 		game->view->buff[i++] = malloc(sizeof(char) * game->win->width);
 }
 */
+
 int	finish_game(t_game	*game)
 {
-	//int	i;
-
-	//i = 0;
-	//while (i < game->win->width)
-	//	free(game->view->buff[i++]);
 	free(game->map);
 	free(game->view);
 	free(game->player);
@@ -45,4 +41,3 @@ void	close_win(t_game *game)
 	finish_game(game);
 	exit(0);
 }
-
