@@ -54,6 +54,9 @@ typedef struct s_view
 	int	drawStart;
 	int	drawEnd;
 	int	color;
+
+	char	**buff;
+	int		texture[8][4096];
 }	t_view;
 
 
@@ -79,9 +82,16 @@ typedef struct s_game
 
 //MEMORY.C
 void	init_malloc(t_game	**game);
+void	init_buffer_texture(t_game *game);
 void	close_win(t_game *game);
-int	finish_game(t_game	*game);
+int		finish_game(t_game	*game);
 //MEMORY.C
+
+//ENGINE.C
+void	calc_camera(t_view *view, t_win *win, int x);
+void	calc_hit_dda(t_view *view, t_map *map);
+void	calc_perp_wall(t_view *view, t_win *win, t_map *map);
+//ENGINE.C
 
 //COMMANDS.C
 int	key_print(int key, t_game *game);
@@ -94,5 +104,12 @@ void	init_view(t_game *game);
 //MLX_UTILS.C
 void	my_mlx_pixel_put(t_win *win, int x, int y, int color);
 //MLX_UTILS.C
+
+
+//TEXTURE.C
+void	print_line(t_win *win, t_view *view, int x, int y1, int y2, int color);
+void	print_sky(t_win *win, t_view *view, int x, int y, int color);
+void	print_floor(t_win *win, t_view *view, int x, int y, int color);
+//TEXTURE.C
 
 #endif
