@@ -2,7 +2,11 @@ CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 NAME = cub
 
+<<<<<<< HEAD
 SRC = engine.c printer.c cub3d.c memory.c commands.c mlx_utils.c view.c ../mapex/ft_atoi.c ../mapex/ft_checkv.c ../mapex/ft_errors.c ../mapex/ft_extract.c ../mapex/ft_extractutils.c ../mapex/ft_map.c ../mapex/get_next_line_utils.c ../mapex/get_next_line.c ../mapex/start_map.c
+=======
+SRC = textures.c cub3d.c memory.c commands.c mlx_utils.c view.c ../mapex/ft_atoi.c ../mapex/ft_checkv.c ../mapex/ft_errors.c ../mapex/ft_extract.c ../mapex/ft_extractutils.c ../mapex/ft_map.c ../mapex/get_next_line_utils.c ../mapex/get_next_line.c ../mapex/start_map.c
+>>>>>>> 3350528a7cb7d427d2cfbf573a157599ad26d42e
 
 %.o: %.c
 	gcc -Imlx -c $< -o $@
