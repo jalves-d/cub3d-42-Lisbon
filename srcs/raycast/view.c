@@ -1,5 +1,23 @@
 #include "cub3d.h"
 
+void	draw(t_game *game)
+{
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < game->win->height)
+	{
+		x = 0;
+		while (x < game->win->width)
+		{
+			game->win->addr[y * game->win->width + x] = game->view->buff[y][x];
+			x++;
+		}
+		y++;
+	}
+}
+
 void	calc_view(t_game *game)
 {
 	t_win *win;
@@ -16,7 +34,8 @@ void	calc_view(t_game *game)
 		calc_camera(view, win, x);
 		calc_hit_dda(view, map);
 		calc_perp_wall(view, win, map, x);
-		print_line(win, view, x, view->drawStart, view->drawEnd, view->color);
+		//print_line(win, view, x, view->drawStart, view->drawEnd, view->color);
+		draw(game);
 		print_sky(win, view, x, view->drawStart, 0x00FFFF);
 		print_floor(win, view, x, view->drawEnd, 0xFF00FF);
 		x++;
@@ -29,7 +48,6 @@ int	main_loop(t_game *game)
 {
 	calc_view(game);
 	mlx_put_image_to_window(game->win->mlx, game->win->mlx_win, game->win->img, 0, 0);
-
 	return (0);
 }
 
@@ -49,7 +67,6 @@ void	init_view(t_game *game)
 {
 	int	i;
 	int	j;
-
 
 	game->view->buff = (char **)malloc(sizeof(char *) * game->win->height);
 	i = 0;

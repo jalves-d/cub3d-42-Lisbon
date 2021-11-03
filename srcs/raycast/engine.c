@@ -57,7 +57,8 @@ void	calc_hit_dda(t_view *view, t_map *map) {
 		}
 }
 
-void	calc_perp_wall(t_view *view, t_win *win, t_map *map, int x) {
+void	calc_perp_wall(t_view *view, t_win *win, t_map *map, int x)
+{
 	if (view->side == 0)
 			view->perpWallDist = (view->mapX - view->posX + (1 - view->stepX) / 2) / view->rayDirx;
 		else
@@ -72,8 +73,9 @@ void	calc_perp_wall(t_view *view, t_win *win, t_map *map, int x) {
 		if (view->drawEnd >= win->height)
 			view->drawEnd = win->height - 1;
 
+		//int	texNum = 5;
 		int	texNum = map->rmap[view->mapX][view->mapY];
-
+		//printf("%d\n", texNum);
 		double wallX;
 		if (view->side == 0)
 			wallX = view->posY + view->perpWallDist * view->rayDiry;
@@ -97,11 +99,12 @@ void	calc_perp_wall(t_view *view, t_win *win, t_map *map, int x) {
 			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
 			int texY = (int)texPos & (64 - 1);
 			texPos += step;
-			int color = view->texture[texNum][64 * texY + texX];
+			view->color = view->texture[3][64 * texY + texX];
+			//printf("%d\n", color);
 			// make color darker for y-view->sides: R, G and B byte each divided through two with a "shift" and an "and"
 			if (view->side == 1)
-				color = (color >> 1) & 8355711;
-			view->buff[y][x] = color;
+				view->color = (view->color >> 1) & 8355711;
+			view->buff[y][x] = view->color;
 		}
 		/*
 		if (map->rmap[view->mapX][view->mapY] == '1')

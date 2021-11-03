@@ -1,5 +1,7 @@
 #include "cub3d.h"
 
+
+
 void	print_line(t_win *win, t_view *view, int x, int y1, int y2, int color)
 {
 	int	y;
