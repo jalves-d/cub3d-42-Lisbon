@@ -55,29 +55,64 @@ void	calc_hit_dda(t_view *view, t_map *map)
 	}
 }
 
-void	calc_perp_wall(t_view *view, t_win *win, t_map *map)
+void	calc_perp_wall(t_view *view, t_win *win, t_map *map, int x)
 {
 	if (view->side == 0)
-		view->perpWallDist = (view->mapX - view->posX + (1 - view->stepX) / 2) / view->rayDirx;
-	else
-		view->perpWallDist = (view->mapY - view->posY + (1 - view->stepY) / 2) / view->rayDiry;
-	view->lineHeight = (int)(win->height / view->perpWallDist);
-	view->drawStart = (-view->lineHeight) / 2 + win->height / 2;
-	if (view->drawStart < 0)
-		view->drawStart = 0;
-	view->drawEnd = view->lineHeight / 2 + win->height / 2;
-	if (view->drawEnd >= win->height)
-		view->drawEnd = win->height - 1;
-	if (map->rmap[view->mapY][view->mapX] == '1')
-		view->color = 0xFF0000;
-	else if (map->rmap[view->mapY][view->mapX] == '2')
-		view->color = 0x00FF00;
-	else if (map->rmap[view->mapY][view->mapX] == '3')
-		view->color = 0x0000FF;
-	else if (map->rmap[view->mapY][view->mapX] == '4')
-		view->color = 0xFFFFFF;
-	else
-		view->color = 0xFFFF00;
-	if (view->side == 1)
-		view->color = view->color / 2;
+			view->perpWallDist = (view->mapX - view->posX + (1 - view->stepX) / 2) / view->rayDirx;
+		else
+			view->perpWallDist = (view->mapY - view->posY + (1 - view->stepY) / 2) / view->rayDiry;
+
+
+		view->lineHeight = (int)(win->height / view->perpWallDist);
+		view->drawStart = (-view->lineHeight) / 2 + win->height / 2;
+		if (view->drawStart < 0)
+			view->drawStart = 0;
+		view->drawEnd = view->lineHeight / 2 + win->height / 2;
+		if (view->drawEnd >= win->height)
+			view->drawEnd = win->height - 1;
+
+		//int	texNum = 5;
+		//int	texNum = map->rmap[view->mapX][view->mapY];
+		//printf("%d\n", texNum);
+		double wallX;
+		if (view->side == 0)
+			wallX = view->posY + view->perpWallDist * view->rayDiry;
+		else
+			wallX = view->posX + view->perpWallDist * view->rayDirx;
+		wallX -= floor(wallX);
+
+		// x coordinate on the texture
+		int texX = (int)(wallX * (double)64);
+		if (view->side == 0 && view->rayDirx > 0)
+			texX = 64 - texX - 1;
+		if (view->side == 1 && view->rayDiry < 0)
+			texX = 64 - texX - 1;
+
+		// How much to increase the texture coordinate perscreen pixel
+		double step = 1.0 * 64 / view->lineHeight;
+		// Starting texture coordinate
+		double texPos = (view->drawStart - win->height / 2 + view->lineHeight / 2) * step;
+		for (int y = view->drawStart; y < view->drawEnd; y++)
+		{
+			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
+			int texY = (int)texPos & (64 - 1);
+			texPos += step;
+			view->color = view->texture[7][64 * texY + texX];
+			//printf("%d\n", color);
+			// make color darker for y-view->sides: R, G and B byte each divided through two with a "shift" and an "and"
+			if (view->side == 1)
+				view->color = (view->color >> 1) & 8355711;
+			view->buff[y][x] = view->color;
+		}
+		/*
+		if (map->rmap[view->mapX][view->mapY] == '1')
+			view->color = 0xFF0000;
+		else if (map->rmap[view->mapX][view->mapY] == '2')
+			view->color = 0x00FF00;
+		else if (map->rmap[view->mapX][view->mapY] == '3')
+			view->color = 0x0000FF;
+		else if (map->rmap[view->mapX][view->mapY] == '4')
+			view->color = 0xFFFFFF;
+		*/
+
 }

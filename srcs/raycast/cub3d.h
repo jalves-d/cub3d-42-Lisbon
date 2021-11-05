@@ -55,13 +55,8 @@ typedef struct s_view
 	int	drawEnd;
 	int	color;
 
-<<<<<<< HEAD
 	char	**buff;
-	int		texture[8][4096];
-=======
-	int **buf;
-	int	**texture;
->>>>>>> 3350528a7cb7d427d2cfbf573a157599ad26d42e
+	int		**texture;
 }	t_view;
 
 typedef struct	s_img
@@ -107,7 +102,7 @@ int		finish_game(t_game	*game);
 //ENGINE.C
 void	calc_camera(t_view *view, t_win *win, int x);
 void	calc_hit_dda(t_view *view, t_map *map);
-void	calc_perp_wall(t_view *view, t_win *win, t_map *map);
+void	calc_perp_wall(t_view *view, t_win *win, t_map *map, int x);
 //ENGINE.C
 
 //COMMANDS.C
