@@ -8,7 +8,7 @@ void	init_game(t_win *win)
 	win->mlx = mlx_init();
 	win->mlx_win = mlx_new_window(win->mlx, win->width, win->height, "Cub3d");
 	win->img = mlx_new_image(win->mlx, win->width, win->height);
-	win->addr = mlx_get_data_addr(win->img, &win->bits_per_pixel,
+	win->addr = (int *)mlx_get_data_addr(win->img, &win->bits_per_pixel,
 			&win->line_length, &win->endian);
 }
 

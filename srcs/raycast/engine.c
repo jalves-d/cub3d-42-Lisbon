@@ -74,7 +74,7 @@ void	calc_perp_wall(t_view *view, t_win *win, t_map *map, int x)
 			view->drawEnd = win->height - 1;
 
 		//int	texNum = 5;
-		int	texNum = map->rmap[view->mapX][view->mapY];
+		//int	texNum = map->rmap[view->mapX][view->mapY];
 		//printf("%d\n", texNum);
 		double wallX;
 		if (view->side == 0)
@@ -99,7 +99,7 @@ void	calc_perp_wall(t_view *view, t_win *win, t_map *map, int x)
 			// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
 			int texY = (int)texPos & (64 - 1);
 			texPos += step;
-			view->color = view->texture[3][64 * texY + texX];
+			view->color = view->texture[7][64 * texY + texX];
 			//printf("%d\n", color);
 			// make color darker for y-view->sides: R, G and B byte each divided through two with a "shift" and an "and"
 			if (view->side == 1)

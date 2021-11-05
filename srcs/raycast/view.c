@@ -34,14 +34,14 @@ void	calc_view(t_game *game)
 		calc_camera(view, win, x);
 		calc_hit_dda(view, map);
 		calc_perp_wall(view, win, map, x);
-		//print_line(win, view, x, view->drawStart, view->drawEnd, view->color);
-		draw(game);
+		print_line(win, view, x, view->drawStart, view->drawEnd, view->color);
 		print_sky(win, view, x, view->drawStart, 0x00FFFF);
 		print_floor(win, view, x, view->drawEnd, 0xFF00FF);
 		x++;
 		//create_rgb(map->cr, map->cg, map->cb)
 		//create_rgb(map->fr, map->fg, map->fb)
 	}
+		//draw(game);
 }
 
 int	main_loop(t_game *game)
