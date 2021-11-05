@@ -3,6 +3,10 @@
 int	key_print(int key, t_game *game)
 {
 	t_view	*view;
+	t_map	*map;
+	double	old_dirx;
+	double	old_planey;
+
 	view = game->view;
 	map = game->map;
 	if (key == ESC)

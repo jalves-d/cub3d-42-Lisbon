@@ -21,5 +21,4 @@ int	main(int argc, char **argv)
 	cub3d(argc, argv, game->map);
 	init_game(game->win);
 	init_view(game);
-	game_status(game);
 }
