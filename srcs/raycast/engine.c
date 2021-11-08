@@ -50,7 +50,7 @@ void	calc_hit_dda(t_view *view, t_map *map)
 			view->mapY += view->stepY;
 			view->side = 1;
 		}
-		if (map->rmap[view->mapX][view->mapY] > '0')
+		if (map->rmap[view->mapX][view->mapY] > 0)
 			hit = 1;
 	}
 }
@@ -67,7 +67,7 @@ void	calc_perp_wall(t_view *view, t_win *win, t_map *map, int x)
 		view->drawStart = (-view->lineHeight) / 2 + win->height / 2;
 		if (view->drawStart < 0)
 			view->drawStart = 0;
-		view->drawEnd = view->lineHeight / 2 + win->height / 2;
+		view->drawEnd = (view->lineHeight / 2) + (win->height / 2);
 		if (view->drawEnd >= win->height)
 			view->drawEnd = win->height - 1;
 
@@ -89,7 +89,7 @@ void	calc_perp_wall(t_view *view, t_win *win, t_map *map, int x)
 			texX = 64 - texX - 1;
 
 		// How much to increase the texture coordinate perscreen pixel
-		double step = 1.0 * 64 / view->lineHeight;
+		double step = 1.0 * (64 / view->lineHeight);
 		// Starting texture coordinate
 		double texPos = (view->drawStart - win->height / 2 + view->lineHeight / 2) * step;
 		for (int y = view->drawStart; y < view->drawEnd; y++)
@@ -100,7 +100,7 @@ void	calc_perp_wall(t_view *view, t_win *win, t_map *map, int x)
 			view->color = view->texture[7][64 * texY + texX];
 			//printf("%d\n", color);
 			// make color darker for y-view->sides: R, G and B byte each divided through two with a "shift" and an "and"
-			if (view->side == 1)
+			if (view->side == '1')
 				view->color = (view->color >> 1) & 8355711;
 			view->buff[y][x] = view->color;
 		}

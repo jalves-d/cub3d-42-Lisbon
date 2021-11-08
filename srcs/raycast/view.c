@@ -6,7 +6,7 @@ void	draw(t_game *game)
 	int	x;
 
 	y = 0;
-	while (y < game->win->height)
+	while (y < 400)
 	{
 		x = 0;
 		while (x < game->win->width)
@@ -34,14 +34,14 @@ void	calc_view(t_game *game)
 		calc_camera(view, win, x);
 		calc_hit_dda(view, map);
 		calc_perp_wall(view, win, map, x);
-		print_line(win, view, x, view->drawStart, view->drawEnd, view->color);
-		print_sky(win, view, x, view->drawStart, 0x00FFFF);
-		print_floor(win, view, x, view->drawEnd, 0xFF00FF);
+		 print_line(win, view, x, view->drawStart, view->drawEnd, view->color);
+		 print_sky(win, view, x, view->drawStart, 0x00FFFF);
+		 print_floor(win, view, x, view->drawEnd, 0xFF00FF);
 		x++;
 		//create_rgb(map->cr, map->cg, map->cb)
 		//create_rgb(map->fr, map->fg, map->fb)
 	}
-		//draw(game);
+		draw(game);
 }
 
 int	main_loop(t_game *game)
@@ -78,7 +78,7 @@ void	init_view(t_game *game)
 		j = 0;
 		while (j < game->win->width)
 		{
-			game->view->buff[i][j] = '0';
+			game->view->buff[i][j] = 0;
 			j++;
 		}
 		i++;
@@ -94,33 +94,32 @@ void	init_view(t_game *game)
 		j = 0;
 		while (j <= 4096)
 		{
-			game->view->texture[i][j] = 0;
+			game->view->texture[i][j] = '0';
 			j++;
 		}
 		i++;
 	}
-	i = 0;
-	j = 0;
+	int x = 0;
+	int y = 0;
 
-
-	while (i < 64)
+	while (x < 64)
 	{
-		while (j < 64)
+		while (y < 64)
 		{
-			int xorcolor = (i * 256 / 64) ^ (j * 256 / 64);
-			int ycolor = j * 256 / 64;
-			int xycolor = j * 128 / 64 + i * 128 / 64;
-			game->view->texture[0][64 * j + i] = 65536 * 254 * (i != j && i != 64 - j); //flat red texture with black cross
-			game->view->texture[1][64 * j + i] = xycolor + 256 * xycolor + 65536 * xycolor; //sloped greyscale
-			game->view->texture[2][64 * j + i] = 256 * xycolor + 65536 * xycolor; //sloped yellow gradient
-			game->view->texture[3][64 * j + i] = xorcolor + 256 * xorcolor + 65536 * xorcolor; //xor greyscale
-			game->view->texture[4][64 * j + i] = 256 * xorcolor; //xor green
-			game->view->texture[5][64 * j + i] = 65536 * 192 * (i % 16 && j % 16); //red bricks
-			game->view->texture[6][64 * j + i] = 65536 * ycolor; //red gradient
-			game->view->texture[7][64 * j + i] = 128 + 256 * 128 + 65536 * 128; //flat grey texture
-			j++;
+			int xorcolor = (x * 256 / 64) ^ (y * 256 / 64);
+			int ycolor = y * 256 / 64;
+			int xycolor = y * 128 / 64 + x * 128 / 64;
+			game->view->texture[0][64 * y + x] = 65536 * 254 * (x != y && x != 64 - j); //flat red texture with black cross
+			game->view->texture[1][64 * y + x] = xycolor + 256 * xycolor + 65536 * xycolor; //sloped greyscale
+			game->view->texture[2][64 * y + x] = 256 * xycolor + 65536 * xycolor; //sloped yellow gradient
+			game->view->texture[3][64 * y + x] = xorcolor + 256 * xorcolor + 65536 * xorcolor; //xor greyscale
+			game->view->texture[4][64 * y + x] = 256 * xorcolor; //xor green
+			game->view->texture[5][64 * y + x] = 65536 * 192 * (x % 16 && y % 16); //red bricks
+			game->view->texture[6][64 * y + x] = 65536 * ycolor; //red gradient
+			game->view->texture[7][64 * y + x] = 128 + 256 * 128 + 65536 * 128; //flat grey texture
+			y++;
 		}
-		i++;
+		x++;
 	}
 	init_setting_games(game);
 	mlx_hook(game->win->mlx_win, 2, 1L << 0, key_print, game);
